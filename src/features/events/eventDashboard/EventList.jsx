@@ -1,12 +1,19 @@
-import React from 'react'
-import EventListItem from './EventListItem'
+import React from "react";
+import EventListItem from "./EventListItem";
 
-const EventList = ({events}) => {
-    return (
-        <>
-           {events.map((event)=> <EventListItem key={event.id} event={event}/>)}
-        </>
-    )
-}
+const EventList = ({ events, onSelectEvent, onDeleteEvent }) => {
+  return (
+    <>
+      {events.map((event) => (
+        <EventListItem
+          key={event.id}
+          event={event}
+          onSelectEvent={onSelectEvent}
+          onDeleteEvent={onDeleteEvent}
+        />
+      ))}
+    </>
+  );
+};
 
-export default EventList
+export default EventList;
