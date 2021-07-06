@@ -1,18 +1,32 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
+import { toast } from "react-toastify";
 import { Dropdown, Image, Menu } from "semantic-ui-react";
-import { signOutUser } from "../auth/authActions";
+import { signOutFromFirebase } from "../../app/firestore/firebaseService";
 
 const SignedInMenu = () => {
-  const dispatch = useDispatch();
   const history = useHistory();
-  const {currentUser} = useSelector(state => state.auth);
+  const { currentUserProfile } = useSelector((state) => state.profile);
+
+
+  async function handleSignOutUser() {
+    try {
+      signOutFromFirebase();
+      history.push("/");
+    } catch (error) {
+      toast.error(error);
+    }
+  }
 
   return (
     <Menu.Item position='right'>
-      <Image avatar spaced='right' src={currentUser.photoURL || '/assets/user.png'} />
-      <Dropdown pointing='top left' text={currentUser.email}>
+      <Image
+        avatar
+        spaced='right'
+        src={currentUserProfile.photoURL || "/assets/user.png"}
+      />
+      <Dropdown pointing='top left' text={currentUserProfile.displayName}>
         <Dropdown.Menu>
           <Dropdown.Item
             as={Link}
@@ -20,14 +34,17 @@ const SignedInMenu = () => {
             text='Create Event'
             icon='plus'
           />
-          <Dropdown.Item text='My profile' icon='user' />
+          <Dropdown.Item as={Link} to={`/profile/${currentUserProfile.id}`} text='My profile' icon='user' />
+          <Dropdown.Item
+            as={Link}
+            to='/account'
+            text='Account'
+            icon='settings'
+          />
           <Dropdown.Item
             text='Sign out'
             icon='power'
-            onClick={() => {
-              dispatch(signOutUser());
-              history.push('/');
-            }}
+            onClick={handleSignOutUser}
           />
         </Dropdown.Menu>
       </Dropdown>

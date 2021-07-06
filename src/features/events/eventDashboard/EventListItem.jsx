@@ -1,5 +1,4 @@
 import React from "react";
-import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import {
   Segment,
@@ -9,13 +8,11 @@ import {
   ItemImage,
   Button,
 } from "semantic-ui-react";
-import { deleteEvent } from "../eventActions";
 import EventListAttendee from "./EventListAttendee";
 import {format} from 'date-fns';
+import { deleteEventInFirestore } from "../../../app/firestore/fireStoreService";
 
 const EventListItem = ({ event }) => {
-  const dispach = useDispatch();
-
   return (
     <Segment.Group>
       <Segment>
@@ -23,7 +20,8 @@ const EventListItem = ({ event }) => {
           <Item>
             <ItemImage size='tiny' circular src={event.hostPhotoURL} />
             <Item.Content>
-              <Item.Header content={event.title} />
+              <Item.Header content={event.title}/>
+              <span style={{fontSize:14, marginLeft:10}}>Added on {format(event.updatedAt, 'MMMM d yyyy h:mm a')}</span>
               <Item.Description>Hosted by {event.hostedBy}</Item.Description>
             </Item.Content>
           </Item>
@@ -46,7 +44,7 @@ const EventListItem = ({ event }) => {
         <div>
           {event.description}
           <Button
-            onClick={() => dispach(deleteEvent(event.id))}
+            onClick={() => deleteEventInFirestore(event.id)}
             color='red'
             floated='right'
             content='Delete'

@@ -23,6 +23,7 @@ const NavBar = () => {
             <Button positive inverted content='Create Event'></Button>
           </Menu.Item>
         )}
+          <Menu.Item as={NavLink} to='/sandbox' name='Sandbox' />
 
         {authenticated ? (
           <SignedInMenu  />
