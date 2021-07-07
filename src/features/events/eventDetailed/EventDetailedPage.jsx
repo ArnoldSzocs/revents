@@ -8,15 +8,19 @@ import EventDetailedChat from "./EventDetailedChat";
 import EventDetailedHeader from "./EventDetailedHeader";
 import EventDetailedInfo from "./EventDetailedInfo";
 import EventDetailedSidebar from "./EventDetailedSidebar";
-// import LoadingComponentent from "../../../app/layout/LoadingComponent";
 import { Redirect } from "react-router-dom";
 import LoadingComponent from "../../../app/layout/LoadingComponent";
+
+
 const EventDetailedPage = ({ match }) => {
   const event = useSelector((state) =>
     state.event.events.find((event) => event.id === match.params.id)
   );
   const dispatch = useDispatch();
   const { loading, error } = useSelector((state) => state.async);
+  const {currentUser} = useSelector(state => state.auth);
+  const isGoing = event?.attendees.some(a =>a.id === currentUser.uid);
+  const isHost = event?.hostUid === currentUser.uid;
 
   useFirestoreDoc({
     query: () => listenToEventFromFirestore(match.params.id),
@@ -33,12 +37,12 @@ const EventDetailedPage = ({ match }) => {
   return (
     <Grid>
       <Grid.Column width={10}>
-        <EventDetailedHeader event={event} />
+        <EventDetailedHeader event={event} isGoing={isGoing} isHost={isHost} />
         <EventDetailedInfo event={event} />
         <EventDetailedChat />
       </Grid.Column>
       <Grid.Column width={6}>
-        <EventDetailedSidebar attendees={event?.attendees} />
+        <EventDetailedSidebar attendees={event?.attendees} hostUid={event.hostUid}/>
       </Grid.Column>
     </Grid>
   );

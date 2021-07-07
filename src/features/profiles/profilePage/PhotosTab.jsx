@@ -89,16 +89,16 @@ export default function PhotosTab({ profile, isCurrentUser }) {
                         handleUpdateMainPhoto(photo, e.target.name)
                       }
                       disabled={photo.url === profile.photoURL}
-
                       basic
                       color='green'
                       content='Main'
                     />
                     <Button
                       name={photo.id}
-                      loading={deleting.isDeleting && photo.id === deleting.target}
+                      loading={
+                        deleting.isDeleting && photo.id === deleting.target
+                      }
                       disabled={photo.url === profile.photoURL}
-
                       onClick={(e) => handleDeletePhoto(photo, e.target.name)}
                       basic
                       color='red'

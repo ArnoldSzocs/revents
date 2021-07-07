@@ -22,7 +22,7 @@ const EventListItem = ({ event }) => {
             <Item.Content>
               <Item.Header content={event.title}/>
               <span style={{fontSize:14, marginLeft:10}}>Added on {format(event.updatedAt, 'MMMM d yyyy h:mm a')}</span>
-              <Item.Description>Hosted by {event.hostedBy}</Item.Description>
+              <Item.Description>Hosted by <Link to={`/profile/${event.hostUid}`}>{event.hostedBy}</Link> </Item.Description>
             </Item.Content>
           </Item>
         </Item.Group>

@@ -1,4 +1,4 @@
-import { LISTEN_TO_CURRENT_USER_PROFILE, LISTEN_TO_SELECTED_USER_PROFILE, LISTEN_TO_USER_PHOTOS } from "./profileConstants";
+import { LISTEN_TO_CURRENT_USER_PROFILE, LISTEN_TO_SELECTED_USER_PROFILE, LISTEN_TO_USER_EVENTS, LISTEN_TO_USER_PHOTOS } from "./profileConstants";
 
 export function listenToCurrentUserProfile(profile) {
   return {
@@ -21,3 +21,9 @@ export function listenToUserPhotos(photos) {
   }
 }
 
+export function listenToUserEvents(events) {
+  return {
+    type: LISTEN_TO_USER_EVENTS,
+    payload:events
+  }
+}
