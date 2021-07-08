@@ -2,6 +2,7 @@ import {
   CREATE_EVENT,
   DELETE_EVENT,
   FETCH_EVENT,
+  LISTEN_TO_EVENT_CHAT,
   UPDATE_EVENT,
 } from "./eventConstants";
 
@@ -32,3 +33,10 @@ export const deleteEvent = (eventId) => {
     payload: eventId,
   };
 };
+
+export const listenToEventChat = (comments) => {
+  return {
+    type: LISTEN_TO_EVENT_CHAT,
+    payload: comments
+  }
+}

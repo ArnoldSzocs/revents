@@ -30,7 +30,7 @@ const EventFilters = ({ predicate, setPredicate, loading }) => {
       <Calendar 
        onChange={(date) => setPredicate('startDate', date)}
        value={predicate.get('startDate') || new Date()}
-       tileDisabled={() => loading}/>
+       tileDisabled={() => loading} />
     </>
   );
 };
